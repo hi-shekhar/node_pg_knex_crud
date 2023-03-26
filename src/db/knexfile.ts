@@ -5,7 +5,7 @@ import * as path from "path"
 
 const config: { [key: string]: Knex.Config } = {
   development: {
-    client: "pg",
+    client: process.env.DB_CLIENT,
     connection: {
       host: process.env.DB_HOST,
       port: parseInt(process.env.DB_PORT as string),
