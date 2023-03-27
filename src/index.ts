@@ -6,6 +6,7 @@ import { ValidationError } from "jsonschema";
 
 import books from "./books/router";
 const app = express();
+export default app;
 const PORT = process.env.PORT;
 
 // support parsing of application/json type post data

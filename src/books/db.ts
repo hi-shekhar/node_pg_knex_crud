@@ -21,8 +21,8 @@ export async function getBook(id: number): Promise<Book[]> {
 export async function updateBook(
   id: number,
   data: Partial<createableBook>
-): Promise<Book[]> {
-  const result = await DB("books")
+): Promise<Book> {
+  const [result] = await DB("books")
     .update(data)
     .where({
       id,

@@ -24,6 +24,6 @@ export function validateUpdateBook(
   if (result.valid) {
     next();
   } else {
-    throw Error(result.errors);
+    throw Error(result.errors[0]);
   }
 }
