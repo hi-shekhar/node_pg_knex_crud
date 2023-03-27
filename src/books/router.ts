@@ -14,14 +14,18 @@ router.get("/", async (req: Request, res: Response) => {
   }
 });
 
-router.post("/", validateCreateableBook, async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const rval = await saveBooks(req.body);
-    res.send(rval);
-  } catch (err: any) {
-    res.status(500).send(err.toString());
+router.post(
+  "/",
+  validateCreateableBook,
+  async (req: Request, res: Response) => {
+    try {
+      const rval = await saveBooks(req.body);
+      res.send(rval);
+    } catch (err: any) {
+      res.status(500).send(err.toString());
+    }
   }
-});
+);
 
 router.get("/:id", async (req: Request, res: Response) => {
   try {
@@ -34,22 +38,21 @@ router.get("/:id", async (req: Request, res: Response) => {
 });
 
 router.put("/:id", validateUpdateBook, async (req: Request, res: Response) => {
-    try {
-      const id = req.params.id;
-      const rval = await updateBook(Number(id), req.body);
-      res.send(rval);
-    } catch (err: any) {
-      res.status(500).send(err.toString());
-    }
+  try {
+    const id = req.params.id;
+    const rval = await updateBook(Number(id), req.body);
+    res.send(rval);
+  } catch (err: any) {
+    res.status(500).send(err.toString());
+  }
 });
 
-
 router.delete("/:id", async (req: Request, res: Response) => {
-    try {
-      const id = req.params.id;
-      const rval = await deleteBook(Number(id));
-      res.sendStatus(201);
-    } catch (err: any) {
-      res.status(500).send(err.toString());
-    }
+  try {
+    const id = req.params.id;
+    await deleteBook(Number(id));
+    res.sendStatus(201);
+  } catch (err: any) {
+    res.status(500).send(err.toString());
+  }
 });

@@ -18,19 +18,22 @@ export async function getBook(id: number): Promise<Book[]> {
   return result;
 }
 
-export async function updateBook( id: number,
+export async function updateBook(
+  id: number,
   data: Partial<createableBook>
 ): Promise<Book[]> {
-  const result = await DB("books").update(data).where({
-    id
-  }).returning("*");
+  const result = await DB("books")
+    .update(data)
+    .where({
+      id,
+    })
+    .returning("*");
   return result;
 }
 
-
 export async function deleteBook(id: number): Promise<number> {
   const result = await DB("books").delete().where({
-    id
+    id,
   });
   return result;
 }
