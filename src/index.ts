@@ -3,8 +3,14 @@ dotenv.config();
 import express, { Response, Request, NextFunction } from "express";
 import bodyParser from "body-parser";
 import { ValidationError } from "jsonschema";
+import * as swaggerUI from "swagger-ui-express";
+// import * as swaggerJsdoc  from "swagger-jsdoc";
 
+// import toOpenApi from "@openapi-contrib/json-schema-to-openapi-schema";
+import data from "./openapi.json";
+import { OpenAPI } from "./books/openapi"
 import books from "./books/router";
+import _ from "lodash";
 const app = express();
 export default app;
 const PORT = process.env.PORT;
@@ -14,8 +20,12 @@ app.use(bodyParser.json());
 //support parsing of application/x-www-form-urlencoded post data
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use("/books", books);
+const openapi = data;
+_.merge(openapi, OpenAPI);
 
+app.use("/books", books);
+const swaggerUiSetup = swaggerUI.setup(openapi);
+app.use("/", swaggerUI.serve, swaggerUiSetup);
 /**
  * Error handler middleware for validation errors.
  */
