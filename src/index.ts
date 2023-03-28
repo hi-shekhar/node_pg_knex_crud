@@ -8,7 +8,7 @@ import * as swaggerUI from "swagger-ui-express";
 
 // import toOpenApi from "@openapi-contrib/json-schema-to-openapi-schema";
 import data from "./openapi.json";
-import { OpenAPI } from "./books/openapi"
+import { OpenAPI } from "./books/openapi";
 import books from "./books/router";
 import _ from "lodash";
 const app = express();

@@ -1,11 +1,21 @@
 // @ts-ignore: Unreachable code error
 import toOpenApi from "json-schema-to-openapi-schema";
-import { booksSchema, booksSchemas, createableBookSchema, postBookSchema, updateBookSchema } from "./schema";
+import {
+  booksSchema,
+  booksSchemas,
+  createableBookSchema,
+  postBookSchema,
+  updateBookSchema,
+} from "./schema";
 
 export const OpenAPI = {
+  tags: {
+    name: "Books",
+  },
   paths: {
     "/books": {
       get: {
+        tags: ["Books"],
         summary: "Get all books",
         responses: {
           "200": {
@@ -21,6 +31,7 @@ export const OpenAPI = {
         },
       },
       post: {
+        tags: ["Books"],
         summary: "Create Books",
         requestBody: {
           content: {
@@ -46,34 +57,36 @@ export const OpenAPI = {
       },
     },
     "/books/{id}": {
-        get: {
-            summary: "Get a book",
-            parameters: [
-              {
-                in: "path",
-                name: "id",
-                required: true,
+      get: {
+        tags: ["Books"],
+        summary: "Get a book",
+        parameters: [
+          {
+            in: "path",
+            name: "id",
+            required: true,
+            schema: {
+              type: "integer",
+              minimum: 1,
+            },
+            description: "The book ID",
+          },
+        ],
+        responses: {
+          "200": {
+            description: "Success",
+            content: {
+              "application/json": {
                 schema: {
-                  type: "integer",
-                  minimum: 1,
+                  $ref: "#/components/schemas/Book",
                 },
-                description: "The book ID",
-              },
-            ],
-            responses: {
-              "200": {
-                description: "Success",
-                content: {
-                    "application/json": {
-                      schema: {
-                        $ref: "#/components/schemas/Book",
-                      },
-                    },
-                  },
               },
             },
           },
+        },
+      },
       put: {
+        tags: ["Books"],
         summary: "Update a book",
         parameters: [
           {
@@ -88,14 +101,14 @@ export const OpenAPI = {
           },
         ],
         requestBody: {
-            content: {
-              "application/json": {
-                schema: {
-                  $ref: "#/components/schemas/BookUpdatable",
-                },
+          content: {
+            "application/json": {
+              schema: {
+                $ref: "#/components/schemas/BookUpdatable",
               },
             },
           },
+        },
         responses: {
           "204": {
             description: "Success",
@@ -103,6 +116,8 @@ export const OpenAPI = {
         },
       },
       delete: {
+        tags: ["Books"],
+
         summary: "Delete a book",
         parameters: [
           {

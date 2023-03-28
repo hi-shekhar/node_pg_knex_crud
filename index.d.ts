@@ -1,1 +1,1 @@
-declare module 'json-schema-to-openapi-schema';
+declare module "json-schema-to-openapi-schema";

@@ -1,10 +1,6 @@
 import { expect } from "chai";
 import request from "supertest";
-import {
-  booksSchema,
-  booksSchemas,
-  postBookSchema,
-} from "../../books/schema";
+import { booksSchema, booksSchemas, postBookSchema } from "../../books/schema";
 import app from "../../index";
 const validate = require("jsonschema").validate;
 
