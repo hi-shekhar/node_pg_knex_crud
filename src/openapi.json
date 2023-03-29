@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "Node Knex PG Crud - OpenAPI 3.0",
-    "description": "This is a Node Knex PG Crud application based on the OpenAPI 3.0 specification."
+    "title": "Node PG Knex Crud - OpenAPI 3.0",
+    "description": "This is a Node PG Knex Crud application based on the OpenAPI 3.0 specification."
   }
 }
