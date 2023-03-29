@@ -12,7 +12,7 @@ export async function saveBooks(books: createableBook[]): Promise<number[]> {
 }
 
 export async function getBook(id: number): Promise<Book[]> {
-  const result = await DB("books").select().where({
+  const [result] = await DB("books").select().where({
     id,
   });
   return result;

@@ -8,7 +8,7 @@ export default router;
 router.get("/", async (req: Request, res: Response) => {
   try {
     const rval = await getAllBooks();
-    res.send(rval).status(200);
+    res.status(200).send(rval);
   } catch (err: any) {
     res.status(500).send(err.toString());
   }
@@ -31,7 +31,11 @@ router.get("/:id", async (req: Request, res: Response) => {
   try {
     const id = req.params.id;
     const rval = await getBook(Number(id));
-    res.send(rval);
+    if (rval) {
+      res.status(200).send(rval);
+    } else {
+      res.sendStatus(404);
+    }
   } catch (err: any) {
     res.status(500).send(err.toString());
   }
@@ -41,7 +45,11 @@ router.put("/:id", validateUpdateBook, async (req: Request, res: Response) => {
   try {
     const id = req.params.id;
     const rval = await updateBook(Number(id), req.body);
-    res.send(rval);
+    if (rval) {
+      res.status(200).send(rval);
+    } else {
+      res.sendStatus(404);
+    }
   } catch (err: any) {
     res.status(500).send(err.toString());
   }
@@ -50,8 +58,12 @@ router.put("/:id", validateUpdateBook, async (req: Request, res: Response) => {
 router.delete("/:id", async (req: Request, res: Response) => {
   try {
     const id = req.params.id;
-    await deleteBook(Number(id));
-    res.sendStatus(204);
+    const rval = await deleteBook(Number(id));
+    if (rval) {
+      res.sendStatus(204);
+    } else {
+      res.sendStatus(404);
+    }
   } catch (err: any) {
     res.status(500).send(err.toString());
   }

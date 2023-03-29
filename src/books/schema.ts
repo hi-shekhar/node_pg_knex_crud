@@ -1,6 +1,6 @@
 import _ from "lodash";
 
-export const createableBookSchema = {
+export const CreateableBookSchema = {
   type: "array",
   items: {
     type: "object",
@@ -36,7 +36,7 @@ export const createableBookSchema = {
   },
 };
 
-export const updateBookSchema = {
+export const UpdateBookSchema = {
   type: "object",
   properties: {
     title: {
@@ -61,7 +61,7 @@ export const updateBookSchema = {
   additionalProperties: false,
 };
 
-export const booksSchema = {
+export const BookSchema = {
   type: "object",
   properties: {
     id: {
@@ -98,11 +98,12 @@ export const booksSchema = {
   additionalProperties: false,
 };
 
-export const booksSchemas = {
+export const BooksSchema = {
   type: "array",
-  items: _.merge(booksSchema),
+  items: _.merge(BookSchema),
 };
-export const postBookSchema = {
+
+export const CreatedBooksSchema = {
   type: "array",
   items: {
     type: "object",

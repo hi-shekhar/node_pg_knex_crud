@@ -1,6 +1,11 @@
 import { expect } from "chai";
+import _ from "lodash";
 import request from "supertest";
-import { booksSchema, booksSchemas, postBookSchema } from "../../books/schema";
+import {
+  BookSchema,
+  BooksSchema,
+  CreatedBooksSchema,
+} from "../../books/schema";
 import app from "../../index";
 const validate = require("jsonschema").validate;
 
@@ -12,7 +17,7 @@ describe("Test the Book endpoints", () => {
     const response = await request(app).get(baseUrl);
     expect(response.status).equal(200);
     if (response.body.length > 0) {
-      expect(validate(response.body, booksSchemas).valid).equals(true);
+      expect(validate(response.body, BooksSchema).valid).equals(true);
     } else {
       expect(response.body).empty;
     }
@@ -33,7 +38,7 @@ describe("Test the Book endpoints", () => {
       ]);
     expect(response.status).equal(201);
     if (response.body.length > 0) {
-      expect(validate(response.body, postBookSchema).valid).equals(true);
+      expect(validate(response.body, CreatedBooksSchema).valid).equals(true);
       id = response.body[0].id;
     } else {
       expect(response.body).empty;
@@ -59,29 +64,27 @@ describe("Test the Book endpoints", () => {
   it("Get a single book", async () => {
     const response = await request(app).get(`${baseUrl}/${id}`);
     expect(response.status).equal(200);
-    if (response.body.length > 0) {
-      expect(validate(response.body, booksSchemas).valid).equals(true);
+    if (!_.isEmpty(response.body)) {
+      expect(validate(response.body, BookSchema).valid).equals(true);
     } else {
       expect(response.body).empty;
     }
   });
 
-  it("update the book", async () => {
+  it("Update a book", async () => {
     const response = await request(app).put(`${baseUrl}/${id}`).send({
       title: "title_changed",
     });
     expect(response.status).equal(200);
-    expect(validate(response.body, booksSchema).valid).equals(true);
+    expect(validate(response.body, BookSchema).valid).equals(true);
     expect(response.body.title).equals("title_changed");
   });
 
-  it("update the book", async () => {
+  it("Update a book failed", async () => {
     const response = await request(app).put(`${baseUrl}/${id}`).send({
-      title: "title_changed",
+      title: 1,
     });
-    expect(response.status).equal(200);
-    expect(validate(response.body, booksSchema).valid).equals(true);
-    expect(response.body.title).equals("title_changed");
+    expect(response.status).equal(400);
   });
 
   it("delete the book", async () => {

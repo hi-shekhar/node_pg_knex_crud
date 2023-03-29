@@ -1,11 +1,11 @@
 // @ts-ignore: Unreachable code error
 import toOpenApi from "json-schema-to-openapi-schema";
 import {
-  booksSchema,
-  booksSchemas,
-  createableBookSchema,
-  postBookSchema,
-  updateBookSchema,
+  BookSchema,
+  BooksSchema,
+  CreateableBookSchema,
+  CreatedBooksSchema,
+  UpdateBookSchema,
 } from "./schema";
 
 export const OpenAPI = {
@@ -28,6 +28,9 @@ export const OpenAPI = {
               },
             },
           },
+          "500": {
+            description: " Internal Server Error",
+          },
         },
       },
       post: {
@@ -43,8 +46,8 @@ export const OpenAPI = {
           },
         },
         responses: {
-          "200": {
-            description: "A list of users",
+          "201": {
+            description: "Resource Created",
             content: {
               "application/json": {
                 schema: {
@@ -52,6 +55,12 @@ export const OpenAPI = {
                 },
               },
             },
+          },
+          "400": {
+            description: "Error: Bad Request",
+          },
+          "500": {
+            description: " Internal Server Error",
           },
         },
       },
@@ -74,7 +83,7 @@ export const OpenAPI = {
         ],
         responses: {
           "200": {
-            description: "Success",
+            description: "Success: Request processed",
             content: {
               "application/json": {
                 schema: {
@@ -82,6 +91,15 @@ export const OpenAPI = {
                 },
               },
             },
+          },
+          "404": {
+            description: "Error: Resource Not Found",
+          },
+          "400": {
+            description: "Error: Bad Request",
+          },
+          "500": {
+            description: " Internal Server Error",
           },
         },
       },
@@ -110,8 +128,24 @@ export const OpenAPI = {
           },
         },
         responses: {
-          "204": {
-            description: "Success",
+          "200": {
+            description: "Success: Request processed",
+            content: {
+              "application/json": {
+                schema: {
+                  $ref: "#/components/schemas/Book",
+                },
+              },
+            },
+          },
+          "404": {
+            description: "Error: Resource Not Found",
+          },
+          "400": {
+            description: "Error: Bad Request",
+          },
+          "500": {
+            description: " Internal Server Error",
           },
         },
       },
@@ -135,17 +169,23 @@ export const OpenAPI = {
           "204": {
             description: "Success status code",
           },
+          "404": {
+            description: "Error: Resource Not Found",
+          },
+          "500": {
+            description: " Internal Server Error",
+          },
         },
       },
     },
   },
   components: {
     schemas: {
-      Books: toOpenApi(booksSchemas),
-      BookCreatable: toOpenApi(createableBookSchema),
-      BookCreated: toOpenApi(postBookSchema),
-      BookUpdatable: toOpenApi(updateBookSchema),
-      Book: toOpenApi(booksSchema),
+      Books: toOpenApi(BooksSchema),
+      BookCreatable: toOpenApi(CreateableBookSchema),
+      BookCreated: toOpenApi(CreatedBooksSchema),
+      BookUpdatable: toOpenApi(UpdateBookSchema),
+      Book: toOpenApi(BookSchema),
     },
   },
 };

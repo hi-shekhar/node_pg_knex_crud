@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { createableBookSchema, updateBookSchema } from "./schema";
+import { CreateableBookSchema, UpdateBookSchema } from "./schema";
 const validate = require("jsonschema").validate;
 
 export function validateCreateableBook(
@@ -7,11 +7,11 @@ export function validateCreateableBook(
   res: Response,
   next: NextFunction
 ) {
-  const result = validate(req.body, createableBookSchema);
+  const result = validate(req.body, CreateableBookSchema);
   if (result.valid) {
     next();
   } else {
-    throw Error(result.errors);
+    throw result.errors[0];
   }
 }
 
@@ -20,10 +20,10 @@ export function validateUpdateBook(
   res: Response,
   next: NextFunction
 ) {
-  const result = validate(req.body, updateBookSchema);
+  const result = validate(req.body, UpdateBookSchema);
   if (result.valid) {
     next();
   } else {
-    throw Error(result.errors[0]);
+    throw result.errors[0];
   }
 }
