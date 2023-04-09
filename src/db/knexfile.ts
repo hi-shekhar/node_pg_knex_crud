@@ -1,5 +1,5 @@
 import * as dotenv from "dotenv";
-dotenv.config();
+dotenv.config({ path: "./../../.env" });
 import type { Knex } from "knex";
 
 const config: { [key: string]: Knex.Config } = {
