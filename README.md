@@ -7,7 +7,7 @@ The Application perform the simple CRUD operation.
 This application present simple demonstration about the:
 1. Usage of Knex
 2. Usage of Swagger
-3. Usage JSON Schema Validation
+3. Usage of JSON Schema Validation
 4. Usage of Unit Testing
 
 ## Built With
